@@ -1,0 +1,16 @@
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\obj\Debug\BitMexBot.csprojAssemblyReference.cache
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\obj\Debug\BitMexBot.Properties.Resources.resources
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\obj\Debug\BitMexBot.csproj.GenerateResource.cache
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\obj\Debug\BitMexBot.csproj.CoreCompileInputs.cache
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\bin\Debug\BitMexBot.exe.config
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\bin\Debug\BitMexBot.exe
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\bin\Debug\BitMexBot.pdb
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\bin\Debug\JsonSubTypes.dll
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\bin\Debug\Newtonsoft.Json.dll
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\bin\Debug\RestSharp.dll
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\bin\Debug\Newtonsoft.Json.xml
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\bin\Debug\RestSharp.xml
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\obj\Debug\BitMexBot.csproj.CopyComplete
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\obj\Debug\BitMexBot.exe
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\obj\Debug\BitMexBot.pdb
+D:\Ravi\Internet Explorer\Project\BitMexBot\BitMexBot\obj\Debug\BitMexBot.Form1.resources
