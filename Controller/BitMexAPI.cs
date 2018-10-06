@@ -1,6 +1,8 @@
 ﻿//using ServiceStack.Text;
 using BitMexBot;
+using BitMexBot.Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,16 +14,6 @@ using System.Threading;
 
 namespace BitMEX
 {
-    public class OrderBookItem
-    {
-        public string Symbol { get; set; }
-        public int Level { get; set; }
-        public int BidSize { get; set; }
-        public decimal BidPrice { get; set; }
-        public int AskSize { get; set; }
-        public decimal AskPrice { get; set; }
-        public DateTime Timestamp { get; set; }
-    }
 
     public class BitMEXApi
     {
@@ -279,6 +271,14 @@ namespace BitMEX
             return Query("PUT", "/order", param, true, true);
         }
 
+        public Wallet GetWallet()
+        {
+            var param = new Dictionary<string, string>();
+            param["currency"] = "XBt";
+            var res = Query("GET", "/user/wallet", param, true);
+            Wallet wallet = JsonConvert.DeserializeObject<Wallet>(res);
+            return wallet;
+        }
 
         #endregion
 
@@ -302,65 +302,5 @@ namespace BitMEX
         }
 
         #endregion RateLimiter
-    }
-
-    // Working Classes
-    public class OrderBook
-    {
-        public string Side { get; set; }
-        public double Price { get; set; }
-        public int Size { get; set; }
-    }
-
-    public class Instrument
-    {
-        public string Symbol { get; set; }
-        public double TickSize { get; set; }
-        public double Volume24H { get; set; }
-    }
-
-    public class Candle
-    {
-        public DateTime TimeStamp { get; set; }
-        public double? Open { get; set; }
-        public double? Close { get; set; }
-        public double? High { get; set; }
-        public double? Low { get; set; }
-        public double? Volume { get; set; }
-        public int Trades { get; set; }
-        public int PCC { get; set; }
-        public double? MA1 { get; set; }
-        public double? MA2 { get; set; }
-    }
-
-    public class Position
-    {
-        public DateTime TimeStamp { get; set; }
-        public double? Leverage { get; set; }
-        public int? CurrentQty { get; set; }
-        public double? CurrentCost { get; set; }
-        public bool IsOpen { get; set; }
-        public double? MarkPrice { get; set; }
-        public double? MarkValue { get; set; }
-        public double? UnrealisedPnl { get; set; }
-        public double? UnrealisedPnlPcnt { get; set; }
-        public double? AvgEntryPrice { get; set; }
-        public double? BreakEvenPrice { get; set; }
-        public double? LiquidationPrice { get; set; }
-
-        public string Symbol { get; set; }
-    }
-
-    public class Order
-    {
-        public DateTime TimeStamp { get; set; }
-        public string Symbol { get; set; }
-        public string OrdStatus { get; set; }
-        public string OrdType { get; set; }
-        public string OrderId { get; set; }
-        public string Side { get; set; }
-        public double? Price { get; set; }
-        public int? OrderQty { get; set; }
-        public int? DisplayQty { get; set; }
     }
 }

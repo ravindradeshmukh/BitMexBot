@@ -71,6 +71,7 @@
     <Compile Include="Model\OrderBook.cs" />
     <Compile Include="Model\OrderBookItem.cs" />
     <Compile Include="Model\Position.cs" />
+    <Compile Include="Model\Wallet.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

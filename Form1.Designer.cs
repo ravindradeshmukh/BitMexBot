@@ -55,6 +55,9 @@
             this.nudAutoQuantity = new System.Windows.Forms.NumericUpDown();
             this.btnAutomatedTrading = new System.Windows.Forms.Button();
             this.tmrAutoTradeExecution = new System.Windows.Forms.Timer(this.components);
+            this.nudPrice = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
@@ -62,6 +65,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudMA1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoQuantity)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPrice)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBuy
@@ -93,7 +97,7 @@
             0,
             0,
             0});
-            this.nudQty.Location = new System.Drawing.Point(110, 34);
+            this.nudQty.Location = new System.Drawing.Point(401, 5);
             this.nudQty.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -105,7 +109,7 @@
             0,
             0});
             this.nudQty.Name = "nudQty";
-            this.nudQty.Size = new System.Drawing.Size(67, 20);
+            this.nudQty.Size = new System.Drawing.Size(156, 20);
             this.nudQty.TabIndex = 2;
             this.nudQty.Value = new decimal(new int[] {
             100,
@@ -128,7 +132,7 @@
             // btnCancelOpenOrders
             // 
             this.btnCancelOpenOrders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnCancelOpenOrders.Location = new System.Drawing.Point(197, 58);
+            this.btnCancelOpenOrders.Location = new System.Drawing.Point(115, 33);
             this.btnCancelOpenOrders.Name = "btnCancelOpenOrders";
             this.btnCancelOpenOrders.Size = new System.Drawing.Size(75, 23);
             this.btnCancelOpenOrders.TabIndex = 4;
@@ -141,8 +145,8 @@
             this.ddlOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlOrderType.FormattingEnabled = true;
             this.ddlOrderType.Items.AddRange(new object[] {
-            "Market",
-            "Limit Post Only"});
+            "Limit Post Only",
+            "Market"});
             this.ddlOrderType.Location = new System.Drawing.Point(13, 5);
             this.ddlOrderType.Name = "ddlOrderType";
             this.ddlOrderType.Size = new System.Drawing.Size(98, 21);
@@ -346,8 +350,8 @@
             this.ddlAutoOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlAutoOrderType.FormattingEnabled = true;
             this.ddlAutoOrderType.Items.AddRange(new object[] {
-            "Market",
-            "Limit Post Only"});
+            "Limit Post Only",
+            "Market"});
             this.ddlAutoOrderType.Location = new System.Drawing.Point(235, 9);
             this.ddlAutoOrderType.Name = "ddlAutoOrderType";
             this.ddlAutoOrderType.Size = new System.Drawing.Size(98, 21);
@@ -396,11 +400,61 @@
             this.tmrAutoTradeExecution.Interval = 30000;
             this.tmrAutoTradeExecution.Tick += new System.EventHandler(this.tmrAutoTradeExecution_Tick);
             // 
+            // nudPrice
+            // 
+            this.nudPrice.DecimalPlaces = 8;
+            this.nudPrice.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.nudPrice.Location = new System.Drawing.Point(401, 55);
+            this.nudPrice.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.nudPrice.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            524288});
+            this.nudPrice.Name = "nudPrice";
+            this.nudPrice.Size = new System.Drawing.Size(156, 20);
+            this.nudPrice.TabIndex = 15;
+            this.nudPrice.ThousandsSeparator = true;
+            this.nudPrice.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            524288});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(282, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(62, 13);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "Percentage";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(282, 55);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(31, 13);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "Price";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(980, 324);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.nudPrice);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gbCandles);
             this.Controls.Add(this.ddlSymbol);
@@ -422,6 +476,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoQuantity)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPrice)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -454,5 +509,8 @@
         private System.Windows.Forms.ComboBox ddlAutoOrderType;
         private System.Windows.Forms.NumericUpDown nudAutoQuantity;
         private System.Windows.Forms.Timer tmrAutoTradeExecution;
+        private System.Windows.Forms.NumericUpDown nudPrice;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
