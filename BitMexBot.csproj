@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiKey.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Controller\BitMexAPI.cs" />
     <Compile Include="DALAPIKeyManager.cs" />
     <Compile Include="Form1.cs">

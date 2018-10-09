@@ -53,7 +53,7 @@ namespace BitMexBot
             InitializeComponent();
             InitializeDropdowns();
             InitializeAPI();
-            InitializeCandleArea();
+            //InitializeCandleArea();
 
         }
         private void InitializeDropdowns()
@@ -135,10 +135,10 @@ namespace BitMexBot
 
         private void MakeOrder(string Side, int Qty, double Price = 0)
         {
-            if (chkCancelWhileOrdering.Checked)
-            {
-                bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
-            }
+            //if (chkCancelWhileOrdering.Checked)
+            //{
+            //    bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+            //}
             switch (ddlOrderType.SelectedItem)
             {
                 case "Limit Post Only":
@@ -205,7 +205,12 @@ namespace BitMexBot
 
         private void btnCancelOpenOrders_Click(object sender, EventArgs e)
         {
-            bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+            foreach (ApiKey apiKey in apiKeyList)
+            {
+                bitmex = new BitMEXApi(apiKey);
+                Wallet wallet = new Wallet();
+                bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+            }
         }
 
         private void ddlNetwork_SelectedIndexChanged(object sender, EventArgs e)
@@ -757,14 +762,30 @@ namespace BitMexBot
         private Int32 getQuantity(Wallet wallet, Int32 percentage, double price, Int32 leverage = 10)
         {
             Int32 quantity = 0;
-            if(percentage > 0 && percentage <= 100 && wallet.amount != null && wallet.amount > 0)
+            if (percentage > 0 && percentage <= 100 && wallet.amount != null && wallet.amount > 0)
             {
-                wallet.amount = wallet.amount / 100000000;
-                var amount = (percentage * wallet.amount) / 100;
-                quantity = Convert.ToInt32(Convert.ToDouble(amount) * price);
-                if(leverage > 0)
+                decimal? amount;
+                switch(ActiveInstrument.Symbol)
                 {
-                    quantity = quantity * leverage;
+                    case Constants.XBTUSD:
+                    case Constants.ETHUSD:
+                        wallet.amount = wallet.amount / 100000000;
+                        amount = (percentage * wallet.amount) / 100;
+                        quantity = Convert.ToInt32(Convert.ToDouble(amount) * price);
+                        if (leverage > 0)
+                        {
+                            quantity = quantity * leverage;
+                        }
+                        break;
+                    default:
+                        wallet.amount = wallet.amount / 100000000;
+                        amount = (percentage * wallet.amount) / 100;
+                        quantity = Convert.ToInt32(Convert.ToDouble(amount) / price);
+                        if (leverage > 0)
+                        {
+                            quantity = quantity * leverage;
+                        }
+                        break;
                 }
             }
             return quantity;

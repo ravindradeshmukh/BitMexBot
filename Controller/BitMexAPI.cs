@@ -198,9 +198,10 @@ namespace BitMEX
             param["orderQty"] = Quantity.ToString();
             param["ordType"] = "Limit";
             param["execInst"] = "ParticipateDoNotInitiate";
-            param["displayQty"] = 0.ToString(); // Shows the order as hidden, keeps us from moving price away from our own orders
+            param["displayQty"] = 0.ToString();// 0.ToString(); // Shows the order as hidden, keeps us from moving price away from our own orders
             param["price"] = Price.ToString();
-            return Query("POST", "/order", param, true);
+            var response = Query("POST", "/order", param, true);
+            return response;
         }
 
         public string MarketOrder(string Symbol, string Side, int Quantity)
