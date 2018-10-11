@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnBuy = new System.Windows.Forms.Button();
             this.btnSell = new System.Windows.Forms.Button();
-            this.nudQty = new System.Windows.Forms.NumericUpDown();
+            this.inputQuantity = new System.Windows.Forms.NumericUpDown();
             this.chkCancelWhileOrdering = new System.Windows.Forms.CheckBox();
             this.btnCancelOpenOrders = new System.Windows.Forms.Button();
             this.ddlOrderType = new System.Windows.Forms.ComboBox();
@@ -55,17 +55,21 @@
             this.nudAutoQuantity = new System.Windows.Forms.NumericUpDown();
             this.btnAutomatedTrading = new System.Windows.Forms.Button();
             this.tmrAutoTradeExecution = new System.Windows.Forms.Timer(this.components);
-            this.nudPrice = new System.Windows.Forms.NumericUpDown();
+            this.inputPrice = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.nudQty)).BeginInit();
+            this.label3 = new System.Windows.Forms.Label();
+            this.inputLeverage = new System.Windows.Forms.NumericUpDown();
+            this.checkHideOrder = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.inputQuantity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).BeginInit();
             this.gbCandles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMA1)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoQuantity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPrice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputPrice)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputLeverage)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBuy
@@ -90,29 +94,19 @@
             this.btnSell.UseVisualStyleBackColor = false;
             this.btnSell.Click += new System.EventHandler(this.btnSell_Click);
             // 
-            // nudQty
+            // inputQuantity
             // 
-            this.nudQty.Increment = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.nudQty.Location = new System.Drawing.Point(401, 5);
-            this.nudQty.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.nudQty.Minimum = new decimal(new int[] {
+            this.inputQuantity.Location = new System.Drawing.Point(401, 5);
+            this.inputQuantity.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.nudQty.Name = "nudQty";
-            this.nudQty.Size = new System.Drawing.Size(156, 20);
-            this.nudQty.TabIndex = 2;
-            this.nudQty.Value = new decimal(new int[] {
-            100,
+            this.inputQuantity.Name = "inputQuantity";
+            this.inputQuantity.Size = new System.Drawing.Size(156, 20);
+            this.inputQuantity.TabIndex = 2;
+            this.inputQuantity.Value = new decimal(new int[] {
+            1,
             0,
             0,
             0});
@@ -181,14 +175,14 @@
             this.dgvCandles.AllowUserToDeleteRows = false;
             this.dgvCandles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCandles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCandles.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCandles.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvCandles.Location = new System.Drawing.Point(6, 46);
             this.dgvCandles.Name = "dgvCandles";
             this.dgvCandles.ReadOnly = true;
@@ -400,30 +394,30 @@
             this.tmrAutoTradeExecution.Interval = 30000;
             this.tmrAutoTradeExecution.Tick += new System.EventHandler(this.tmrAutoTradeExecution_Tick);
             // 
-            // nudPrice
+            // inputPrice
             // 
-            this.nudPrice.DecimalPlaces = 8;
-            this.nudPrice.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.nudPrice.Location = new System.Drawing.Point(401, 55);
-            this.nudPrice.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.nudPrice.Minimum = new decimal(new int[] {
+            this.inputPrice.DecimalPlaces = 8;
+            this.inputPrice.Increment = new decimal(new int[] {
             1,
             0,
             0,
             524288});
-            this.nudPrice.Name = "nudPrice";
-            this.nudPrice.Size = new System.Drawing.Size(156, 20);
-            this.nudPrice.TabIndex = 15;
-            this.nudPrice.ThousandsSeparator = true;
-            this.nudPrice.Value = new decimal(new int[] {
+            this.inputPrice.Location = new System.Drawing.Point(401, 62);
+            this.inputPrice.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.inputPrice.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            524288});
+            this.inputPrice.Name = "inputPrice";
+            this.inputPrice.Size = new System.Drawing.Size(156, 20);
+            this.inputPrice.TabIndex = 15;
+            this.inputPrice.ThousandsSeparator = true;
+            this.inputPrice.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -441,20 +435,54 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(282, 55);
+            this.label2.Location = new System.Drawing.Point(282, 63);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(31, 13);
             this.label2.TabIndex = 18;
             this.label2.Text = "Price";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(282, 32);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(52, 13);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "Leverage";
+            // 
+            // inputLeverage
+            // 
+            this.inputLeverage.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.inputLeverage.Location = new System.Drawing.Point(401, 33);
+            this.inputLeverage.Name = "inputLeverage";
+            this.inputLeverage.Size = new System.Drawing.Size(156, 20);
+            this.inputLeverage.TabIndex = 21;
+            // 
+            // checkHideOrder
+            // 
+            this.checkHideOrder.AutoSize = true;
+            this.checkHideOrder.Location = new System.Drawing.Point(177, 62);
+            this.checkHideOrder.Name = "checkHideOrder";
+            this.checkHideOrder.Size = new System.Drawing.Size(82, 17);
+            this.checkHideOrder.TabIndex = 22;
+            this.checkHideOrder.Text = "Hide Orders";
+            this.checkHideOrder.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(980, 324);
+            this.Controls.Add(this.checkHideOrder);
+            this.Controls.Add(this.inputLeverage);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.nudPrice);
+            this.Controls.Add(this.inputPrice);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.gbCandles);
             this.Controls.Add(this.ddlSymbol);
@@ -462,12 +490,12 @@
             this.Controls.Add(this.ddlOrderType);
             this.Controls.Add(this.btnCancelOpenOrders);
             this.Controls.Add(this.chkCancelWhileOrdering);
-            this.Controls.Add(this.nudQty);
+            this.Controls.Add(this.inputQuantity);
             this.Controls.Add(this.btnSell);
             this.Controls.Add(this.btnBuy);
             this.Name = "Form1";
             this.Text = "BitMex Simple Bot";
-            ((System.ComponentModel.ISupportInitialize)(this.nudQty)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputQuantity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCandles)).EndInit();
             this.gbCandles.ResumeLayout(false);
             this.gbCandles.PerformLayout();
@@ -476,7 +504,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAutoQuantity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPrice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputPrice)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.inputLeverage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -486,7 +515,7 @@
 
         private System.Windows.Forms.Button btnBuy;
         private System.Windows.Forms.Button btnSell;
-        private System.Windows.Forms.NumericUpDown nudQty;
+        private System.Windows.Forms.NumericUpDown inputQuantity;
         private System.Windows.Forms.CheckBox chkCancelWhileOrdering;
         private System.Windows.Forms.Button btnCancelOpenOrders;
         private System.Windows.Forms.ComboBox ddlOrderType;
@@ -509,8 +538,11 @@
         private System.Windows.Forms.ComboBox ddlAutoOrderType;
         private System.Windows.Forms.NumericUpDown nudAutoQuantity;
         private System.Windows.Forms.Timer tmrAutoTradeExecution;
-        private System.Windows.Forms.NumericUpDown nudPrice;
+        private System.Windows.Forms.NumericUpDown inputPrice;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.NumericUpDown inputLeverage;
+        private System.Windows.Forms.CheckBox checkHideOrder;
     }
 }

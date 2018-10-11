@@ -66,7 +66,7 @@ namespace BitMEX
 
         private long GetNonce()
         {
-            DateTime yearBegin = new DateTime(1998, 1, 1);
+            DateTime yearBegin = new DateTime(2018, 1, 1);
             return DateTime.UtcNow.Ticks - yearBegin.Ticks;
         }
 
@@ -97,6 +97,16 @@ namespace BitMEX
                 webRequest.Headers.Add("api-nonce", nonce);
                 webRequest.Headers.Add("api-key", apiKey);
                 webRequest.Headers.Add("api-signature", signatureString);
+
+                //string expires = GetExpiresArg();
+                //string message = method + url + expires + postData;
+                //byte[] signatureBytes = hmacsha256(Encoding.UTF8.GetBytes(apiSecret), Encoding.UTF8.GetBytes(message));
+                //string signatureString = ByteArrayToString(signatureBytes);
+
+                ////webRequest.Headers.Add("api-nonce", nonce);
+                //webRequest.Headers.Add("api-expires", expires);
+                //webRequest.Headers.Add("api-key", apiKey);
+                //webRequest.Headers.Add("api-signature", signatureString);
             }
 
             try
@@ -190,18 +200,16 @@ namespace BitMEX
             return JsonConvert.DeserializeObject<List<OrderBook>>(res);
         }
 
-        public string PostOrderPostOnly(string Symbol, string Side, double Price, int Quantity)
+        public string PostOrderPostOnly(string Symbol, string Side, double Price, int Quantity, bool hideQuantity = false)
         {
             var param = new Dictionary<string, string>();
             param["symbol"] = Symbol;
             param["side"] = Side;
-            param["orderQty"] = Quantity.ToString();
             param["ordType"] = "Limit";
             param["execInst"] = "ParticipateDoNotInitiate";
-            param["displayQty"] = 0.ToString();// 0.ToString(); // Shows the order as hidden, keeps us from moving price away from our own orders
             param["price"] = Price.ToString();
-            var response = Query("POST", "/order", param, true);
-            return response;
+            param["displayQty"] = hideQuantity ? 0.ToString() : Quantity.ToString();    // Shows the order as hidden, keeps us from moving price away from our own orders
+            return Query("POST", "/order", param, true);
         }
 
         public string MarketOrder(string Symbol, string Side, int Quantity)
@@ -232,6 +240,7 @@ namespace BitMEX
         {
             var param = new Dictionary<string, string>();
             param["symbol"] = symbol;
+            param["count"] = 2.ToString();
             string res = Query("GET", "/instrument", param);
             return JsonConvert.DeserializeObject<List<Instrument>>(res);
         }
@@ -276,9 +285,18 @@ namespace BitMEX
         {
             var param = new Dictionary<string, string>();
             param["currency"] = "XBt";
-            var res = Query("GET", "/user/wallet", param, true);
+            var res = Query("GET", "/user/margin", param, true);
             Wallet wallet = JsonConvert.DeserializeObject<Wallet>(res);
             return wallet;
+        }
+
+        public string GetExpiresArg()
+        {
+            long timestamp = (long)((DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds);
+
+            string expires = (timestamp + 60).ToString();
+
+            return (expires);
         }
 
         #endregion

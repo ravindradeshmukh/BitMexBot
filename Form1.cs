@@ -28,13 +28,9 @@ namespace BitMexBot
         private static string bitmexDomain = "https://www.bitmex.com";
 
         private static List<ApiKey> apiKeyList = new List<ApiKey>
-            {
-                new ApiKey("Ij0KlWKZytwWW2WI1rWrc53i", "ITCPeHQypsIvlEs2LD_B28_nedhD-M4qulzwbNg501rQhrMK", "https://testnet.bitmex.com"),
-                new ApiKey("IOyH6USAJW1ndDF0umA9Yu_i", "VsCQtz7_l4pBF2eFEH6-0danNE7Ffeny1bO_MNQLMfvrNPgY", "https://testnet.bitmex.com"),
-                new ApiKey("bLUyiYnSBi7y_vZYeRf9-dnS", "TK9m9DrJSj1X6oOHRtIA1MXo4iYFLbymye2S1zybSt5oZgMK", "https://testnet.bitmex.com"),
-                new ApiKey("Iv7VkxYaizAg_J1IVzrJco4T", "_hU-pYEKMMz4vFmwKwAZ0k09h8jsGcQ8yj0XSMFawEK9xucV", "https://testnet.bitmex.com"),
-                new ApiKey("9R4reBYszUOIsyHDMM48_1dh", "aZcSaTNr__S84NfwgwNmOeUYdL9-PPmX_dLmYKr47briAjyZ", "https://testnet.bitmex.com")
-            };
+        {
+            new ApiKey("Ij0KlWKZytwWW2WI1rWrc53i", "ITCPeHQypsIvlEs2LD_B28_nedhD-M4qulzwbNg501rQhrMK", "https://testnet.bitmex.com")
+        };
 
 
         BitMEXApi bitmex;
@@ -135,10 +131,11 @@ namespace BitMexBot
 
         private void MakeOrder(string Side, int Qty, double Price = 0)
         {
-            //if (chkCancelWhileOrdering.Checked)
-            //{
-            //    bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
-            //}
+            if (chkCancelWhileOrdering.Checked)
+            {
+                bitmex.CancelAllOpenOrders(ActiveInstrument.Symbol);
+            }
+            bool hidequantity = checkHideOrder.Checked;
             switch (ddlOrderType.SelectedItem)
             {
                 case "Limit Post Only":
@@ -146,7 +143,7 @@ namespace BitMexBot
                     {
                         Price = CalculateMakerOrderPrice(Side);
                     }
-                    var MakerBuy = bitmex.PostOrderPostOnly(ActiveInstrument.Symbol, Side, Price, Qty);
+                    var MakerBuy = bitmex.PostOrderPostOnly(ActiveInstrument.Symbol, Side, Price, Qty, hidequantity);
                     break;
                 case "Market":
                     bitmex.MarketOrder(ActiveInstrument.Symbol, Side, Qty);
@@ -177,11 +174,11 @@ namespace BitMexBot
             {
                 bitmex = new BitMEXApi(apiKey);
                 Wallet wallet = bitmex.GetWallet();
-                var price = Convert.ToDouble(nudPrice.Value);
-                var quantity = getQuantity(wallet, Convert.ToInt32(nudQty.Value), price);
+                var price = Convert.ToDouble(inputPrice.Value);
+                var quantity = getQuantity(wallet, Convert.ToInt32(inputQuantity.Value), price, Convert.ToInt32(inputLeverage.Value));
                 if (quantity > 0)
                 {
-                    MakeOrder("Buy", quantity, price);
+                    //MakeOrder("Buy", quantity, price);
                 }
             }
         }
@@ -193,12 +190,12 @@ namespace BitMexBot
                 bitmex = new BitMEXApi(apiKey);
                 Wallet wallet = new Wallet();
                 wallet = bitmex.GetWallet();
-                var price = Convert.ToDouble(nudPrice.Value);
-                var quantity = getQuantity(wallet, Convert.ToInt32(nudQty.Value), price);
+                var price = Convert.ToDouble(inputPrice.Value);
+                var quantity = getQuantity(wallet, Convert.ToInt32(inputQuantity.Value), price, Convert.ToInt32(inputLeverage.Value));
                 if (quantity > 0)
                 {
                     //MakeOrder("Sell", Convert.ToInt32(nudQty.Value));
-                    MakeOrder("Sell", quantity, price);
+                    //MakeOrder("Sell", quantity, price);
                 }
             }
         }
@@ -342,7 +339,7 @@ namespace BitMexBot
         {
             if (chkUpdateCandles.Checked)
             {
-                UpdateCandles();
+                //UpdateCandles();
             }
 
         }
@@ -351,17 +348,17 @@ namespace BitMexBot
         {
             if (chkUpdateCandles.Checked)
             {
-                tmrCandleUpdater.Start();
+                //tmrCandleUpdater.Start();
             }
             else
             {
-                tmrCandleUpdater.Stop();
+                //tmrCandleUpdater.Stop();
             }
         }
 
         private void ddlCandleTimes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateCandles();
+            //UpdateCandles();
         }
 
         private void btnAutomatedTrading_Click(object sender, EventArgs e)
@@ -759,7 +756,7 @@ namespace BitMexBot
             //}
         }
 
-        private Int32 getQuantity(Wallet wallet, Int32 percentage, double price, Int32 leverage = 10)
+        private Int32 getQuantity(Wallet wallet, Int32 percentage, double price, Int32 leverage = 0)
         {
             Int32 quantity = 0;
             if (percentage > 0 && percentage <= 100 && wallet.amount != null && wallet.amount > 0)
